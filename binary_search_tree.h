@@ -14,17 +14,20 @@ class binary_search_tree {
     Node *left, *right;
     string key;
     int data;
-
+  };
+  Node *root;
  public:
     binary_search_tree();
-    ~binary_search_tree_h();  
+    ~binary_search_tree();  
     void set(string key, int data);
+    void set_helper(Node *current, string key, int value);
     int find(string key);
     void print();
+    void print_helper(Node *current);
     void min();
     void max();
     void save_file(string file);
-    void delete(string key);
+    void remove(string key);
 };
 
 
