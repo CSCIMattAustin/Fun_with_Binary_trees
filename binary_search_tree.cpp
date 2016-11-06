@@ -8,7 +8,12 @@ binary_search_tree::~binary_search_tree(){
   //destructor helper call
 }
 void binary_search_tree::set(string key, int data){
-  if(find(key) == data){
+  Node *insert_node = new Node;
+  insert_node->data = data;
+  insert_node->key = key;
+  if (root == NULL)
+    root = insert_node;
+  else if(find(key) == data){
     Node *traverse = root;
     while(traverse -> key != key){
       if(traverse ->left->key > key)
@@ -31,7 +36,7 @@ void binary_search_tree::set_helper(Node *current, string key, int data){
       Node *insert = new Node;
 	insert->data = data;
 	insert->key = key;
-	current->right = insert;
+	current->left = insert;
       }
     }
     else if( current->key < key){
