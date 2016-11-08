@@ -34,7 +34,9 @@ class binary_search_tree {
     void print();
     void print_helper(Node *current);
     void min();
+    int min_helper(Node *current);
     void max();
+    int max_helper(Node *current);
     void save_file(string file);
     void remove(string key);
 };

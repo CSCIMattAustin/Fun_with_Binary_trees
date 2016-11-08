@@ -11,12 +11,12 @@ void binary_search_tree::set(string key, int data){
 
   if (root == NULL)//insert at front
     root = new Node(key,data);
-  else if(find(key) != -1){//if the key is already in the tree
+  else if(find(key) != -1){//if the data is already in the tree
     Node *traverse = root;
-    while (traverse -> key != key){
-      if(traverse ->left->key > key)
+    while (traverse -> data != data){
+      if(traverse ->left->data > data)
   	traverse = traverse ->left;
-      else if(traverse->right->key < key)
+      else if(traverse->right->data < data)
   	traverse = traverse->right;
     }
     traverse->data = data;
@@ -27,14 +27,14 @@ void binary_search_tree::set(string key, int data){
     }
 void binary_search_tree::set_helper(Node *current, string key, int data){
   if(current != NULL){
-  if(current -> key > key){
+  if(current -> data > data){
     if(current ->left != NULL)
       set_helper(current->left, key, data);
     else {;
       current->left = new Node(key, data);
     }
   }   
-  else if( current->key < key){
+  else if( current->data < data){
     if(current ->right != NULL)
       set_helper(current->right, key, data);
     else{
@@ -69,8 +69,36 @@ void binary_search_tree::print(){
 void binary_search_tree::print_helper(Node *current){
   if(current != NULL){
     print_helper(current->left);
-    cout << "The key is " << current->key << "and the data is " << current->data
+    cout << "The data for ["  << current->key << "] is " << current->data
 	 << endl;
     print_helper(current->right);
   }
+}
+void  binary_search_tree::min(){
+  if (root == NULL)
+    cout << "This is an empty tree!" << endl;
+  else 
+    cout << min_helper(root) << endl;
+
+
+}
+int binary_search_tree::min_helper(Node *current){
+  if (current != NULL && current->left != NULL)
+    min_helper(current->left);
+  else
+    return current->data;
+
+}
+
+void  binary_search_tree::max(){
+ if (root == NULL)
+    cout << "This is an empty tree!" << endl;
+  else 
+    cout << max_helper(root) << endl;
+}
+int binary_search_tree::max_helper(Node *current){
+  if (current != NULL && current->right != NULL)
+    max_helper(current->right);
+  else
+    return current->data;
 }
