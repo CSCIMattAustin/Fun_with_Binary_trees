@@ -5,16 +5,24 @@
 #include <string>
 #include <iomanip>
 #include <fstream>
-
 using namespace std;
+
+class Node{
+ public:
+  Node *left, *right;
+  string key;
+  int data;
+  Node(string key, int data){
+  left = NULL;
+  right = NULL;
+  this->key = key;
+  this->data = data;
+}
+
+};
 
 class binary_search_tree {
  private:
-  struct Node{
-    Node *left, *right;
-    string key;
-    int data;
-  };
   Node *root;
  public:
     binary_search_tree();
@@ -22,6 +30,7 @@ class binary_search_tree {
     void set(string key, int data);
     void set_helper(Node *current, string key, int value);
     int find(string key);
+    int find_helper(Node *current, string key);
     void print();
     void print_helper(Node *current);
     void min();
