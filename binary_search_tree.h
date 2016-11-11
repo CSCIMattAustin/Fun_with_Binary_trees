@@ -37,8 +37,12 @@ class binary_search_tree {
     int min_helper(Node *current);
     void max();
     int max_helper(Node *current);
+    void read_from_file(string file);
+    void read_find(Node *current, string key);
+    void read_helper(Node *current, string key);
     void save_file(string file);
     void remove(string key);
+    void remove_bad_char(string &key);
 };
 
 
