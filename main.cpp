@@ -5,6 +5,7 @@
 using namespace std;
 void print_welcome();
 int main(){
+  string file;
   binary_search_tree first_tree;
   string key;
   int data;
@@ -27,6 +28,16 @@ int main(){
       first_tree.min();
     else if(answer == '4')
       first_tree.max();
+    else if(answer == '5'){
+      cout << "Please enter a file to read from: ";
+      cin >> file;
+      first_tree.read_from_file(file);
+    }
+    else if (answer == '6'){
+      cout << "Please enter the key of the item you wish to delete: ";
+      cin >> key;
+      first_tree.remove(key);
+    }
     print_welcome();
     cout << "\n?";
     cin >> answer;
@@ -36,18 +47,17 @@ int main(){
 void print_welcome(){
   for (int i = 0; i<54; i++)
     cout << "-";
-  cout << endl;
-  cout << "|  WELCOME TO THE FANTASTIC TREE MANIPULATOR!!!!!!!  |"
-       << "\n|  Please enter one of the following options         |" << endl
-       << "|";
+  cout << "\n|<<<<<WELCOME TO THE FANTASTIC TREE MANIPULATOR>>>>>>|"
+       << "\n|<<<<<Please enter one of the following options>>>>>>|\n|";
   for(int i = 0; i<52; i++)
     cout << " ";
-  cout << "|"
-       << "\n|  (1)->Enter an item to be inserted into the tree   |"
-       << "\n|  (2)->print the tree                               |"
-       << "\n|  (3)->Print the smallest number                    |"
-       << "\n|  (4)->Print the greatest number                    |"
-       << "\n|  (q)->quit                                         |"
+  cout << "|\n|<<(1)->Enter an item to be inserted into the tree>>>|"
+       << "\n|<<(2)->print the tree.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>|"
+       << "\n|<<(3)->Print the smallest number>>>>>>>>>>>>>>>>>>>>|"
+       << "\n|<<(4)->Print the greatest number>>>>>>>>>>>>>>>>>>>>|"
+       << "\n|<<(5)->read from a file>>>>>>>>>>>>>>>>>>>>>>>>>>>>>|"
+       << "\n|<<(6)->remove an item>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>|"
+       << "\n|<<(q)->quit>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>|"
        << endl;
   for (int i = 0; i<54; i++)
     cout << "-";
