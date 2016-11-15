@@ -10,19 +10,25 @@ binary_search_tree::~binary_search_tree(){
     root = NULL;
   }
 }
+void binary_search_tree::erase_tree(){
+  if (root == NULL)
+    return;
+  else
+    destructor_helper(root);
+  root = NULL;
+}
+
 void binary_search_tree::destructor_helper(Node *current){
   if (current != NULL){
     destructor_helper(current->left);
     destructor_helper(current->right);
     delete current;
   }
-
 }
 void binary_search_tree::set(string key, int data){
-
   if (root == NULL)//insert at front
     root = new Node(key,data);
-  else if(find_helper(root, key) != -1){//if the data is already in the tree
+  else if(find(key) != -1){//if the data is already in the tree
     Node *traverse = root;
     while (traverse->left != NULL && traverse ->right != NULL && traverse -> key != key){
       if(traverse->left != NULL && traverse ->key > key)
@@ -34,23 +40,20 @@ void binary_search_tree::set(string key, int data){
   }
   else//search for the correct place to insert
     set_helper(root, key, data);
-
 }
 void binary_search_tree::set_helper(Node *current, string key, int data){
   if(current != NULL){
-    if(current -> data > data){
+    if(current -> key > key){
       if(current ->left != NULL)
 	set_helper(current->left, key, data);
       else {
 	current->left = new Node(key, data);
-	cout << current->left->key;
       }
     }   
-    else if( current->data < data){
+    else if( current->key < key){
       if(current ->right != NULL)
 	set_helper(current->right, key, data);
       else{
-	cout << current->right->key;
 	current->right = new Node(key, data);
       }
     }
@@ -60,7 +63,6 @@ void binary_search_tree::set_helper(Node *current, string key, int data){
 int binary_search_tree::find(string key){
   if(root == NULL)
     return -1;
-  
   return find_helper(root, key);
 }
 int binary_search_tree::find_helper(Node *current, string key){
@@ -92,15 +94,11 @@ void  binary_search_tree::min(){
     cout << "This is an empty tree!" << endl;
   else 
     cout << min_helper(root) << endl;
-
-
 }
-int binary_search_tree::min_helper(Node *current){
+string binary_search_tree::min_helper(Node *current){
   if (current != NULL && current->left != NULL)
     return min_helper(current->left);
-  
-  return current->data;
-
+  return current->key;
 }
 
 void  binary_search_tree::max(){
@@ -109,11 +107,11 @@ void  binary_search_tree::max(){
   else 
     cout << max_helper(root) << endl;
 }
-int binary_search_tree::max_helper(Node *current){
+string binary_search_tree::max_helper(Node *current){
   if (current != NULL && current->right != NULL)
     return max_helper(current->right);
   
-  return current->data;
+  return current->key;
 }
 void binary_search_tree::read_from_file(string file){
   string key;
@@ -150,23 +148,16 @@ void binary_search_tree::read_helper(Node *current, string key){
   if(current -> key > key){
     if(current->left != NULL)
       read_helper(current->left, key);
-    
-    else if (current->left == NULL){
+    else if (current->left == NULL)
       current->left = new Node(key, 1);	
-    }
   } 
   else if(current->key < key){
     if (current->right != NULL)
       read_helper(current->right, key);
-    
-    else if (current ->right == NULL){
+    else if (current ->right == NULL)
       current->right = new Node(key, 1);
-    }
   }
 }
-
-
-
 void binary_search_tree::remove_bad_char(string &key){
   unsigned MAX_POSITION = 100;
   while(key.find(".") < MAX_POSITION)
@@ -194,16 +185,13 @@ void binary_search_tree::remove_bad_char(string &key){
   while(key.find("(") < MAX_POSITION)
     key.erase(key.find("("), 1);
   while(key.find(")") < MAX_POSITION)
-    key.erase(key.find(")"), 1);
-  
-  
+    key.erase(key.find(")"), 1); 
 }
 void binary_search_tree::remove(string key){
   if (root == NULL)
     return;
   else
     remove_helper(root, key);
-
 }
 void binary_search_tree::remove_helper(Node *&current, string key){
   if (current != NULL){
@@ -237,4 +225,26 @@ void binary_search_tree::remove_helper(Node *&current, string key){
       traverse = NULL;
     }
   }
+}
+void binary_search_tree::save_file(string file){
+  if (root == NULL)
+    return;
+  else {
+    ofstream oFile(file.c_str());
+    save_helper(root, oFile);
+    oFile.close();
+  }
+}
+void binary_search_tree::save_helper(Node *current, ofstream &oFile){
+ 
+  if(current != NULL){
+    save_helper(current->left, oFile);
+    oFile  << current->key << " " << current->data << endl;
+    save_helper(current->right, oFile);
+  }
+  
+}
+
+int binary_search_tree::operator[](string key){
+  return find(key);
 }
