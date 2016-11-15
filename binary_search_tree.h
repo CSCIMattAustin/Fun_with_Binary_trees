@@ -27,12 +27,13 @@ class binary_search_tree {
   void destructor_helper(Node *current);
   void set_helper(Node *current, string key, int value);
   int find_helper(Node *current, string key);
-  int min_helper(Node *current);
-  int max_helper(Node *current);
+  string min_helper(Node *current);
+  string max_helper(Node *current);
   void read_helper(Node *current, string key);
   void print_helper(Node *current);
   void remove_bad_char(string &key);
   void remove_helper(Node *&current, string key);
+  void save_helper(Node *current, ofstream &oFile);
  public:
   binary_search_tree();
   ~binary_search_tree();  
@@ -45,7 +46,8 @@ class binary_search_tree {
   void read_find(Node *current, string key);   
   void save_file(string file);
   void remove(string key);
-    
+  void erase_tree();
+  int operator[](string key);
 };
 
 
