@@ -17,7 +17,7 @@ int main(){
     if (answer == '1'){
     cout << "Please enter the key you would like to insert: ";
     cin >> key;
-    cout << "Please enter the data you would like"
+    cout << "Please enter the data you would like " 
 	 << "to be associated with the key: ";
     cin >> data;
     first_tree.set(key, data);
@@ -38,7 +38,19 @@ int main(){
       cin >> key;
       first_tree.remove(key);
     }
-    print_welcome();
+    else if (answer == '7'){
+      cout << "Please enter the file you wish to save the tree in: ";
+      cin >> file;
+      first_tree.save_file(file);
+    }
+    else if (answer == '8'){
+      cout << "Please enter the key of the data you wish to know: ";
+      cin >> key;
+      cout << "The data for " << key << " is " << first_tree[key] << endl;
+    }
+    else if (answer == '9')
+      first_tree.erase_tree();
+      print_welcome();
     cout << "\n?";
     cin >> answer;
 }
@@ -52,12 +64,15 @@ void print_welcome(){
   for(int i = 0; i<52; i++)
     cout << " ";
   cout << "|\n|<<(1)->Enter an item to be inserted into the tree>>>|"
-       << "\n|<<(2)->print the tree.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>|"
-       << "\n|<<(3)->Print the smallest number>>>>>>>>>>>>>>>>>>>>|"
-       << "\n|<<(4)->Print the greatest number>>>>>>>>>>>>>>>>>>>>|"
-       << "\n|<<(5)->read from a file>>>>>>>>>>>>>>>>>>>>>>>>>>>>>|"
-       << "\n|<<(6)->remove an item>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>|"
-       << "\n|<<(q)->quit>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>|"
+       << "\n|<<(2)->Print the tree>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>|"
+       << "\n|<<(3)->Print the first word alphabetically>>>>>>>>>>|"
+       << "\n|<<(4)->Print the last word alphabetically>>>>>>>>>>>|"
+       << "\n|<<(5)->Read from a file>>>>>>>>>>>>>>>>>>>>>>>>>>>>>|"
+       << "\n|<<(6)->Remove an item>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>|"
+       << "\n|<<(7)->Save tree to a file>>>>>>>>>>>>>>>>>>>>>>>>>>|"
+       << "\n|<<(8)->Get the data from a given key>>>>>>>>>>>>>>>>|"
+       << "\n|<<(9)->Erase the entire tree>>>>>>>>>>>>>>>>>>>>>>>>|"
+       << "\n|<<(q)->Quit>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>|"
        << endl;
   for (int i = 0; i<54; i++)
     cout << "-";
