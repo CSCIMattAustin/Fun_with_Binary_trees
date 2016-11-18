@@ -60,16 +60,29 @@ int binary_search_tree::find(string key){
 }
 int binary_search_tree::find_helper(Node *current, string key){
   if (current -> key != key){  //checks to see if it is found before moving to the next Node
-    if (current -> left != NULL && current->key > key)
-      return find_helper(current ->left, key);//move to the left Node if it isn't NULL
-    else if (current -> right != NULL && current->key < key)
+    if (current->key > key){//needs to be in the left subtree
+      if (current -> left != NULL)//doesn' equal NULL
+	return find_helper(current ->left, key);//move to the left Node if it isn't NULL
+      else if (current->left == NULL){//does equal NULL
+	current->left = new Node(key, 0);//Node wasn't found so insert with 0 as the data
+	return current->left->data;//return the data which is 0
+      }
+    }
+    else if (current->key < key){//needs to be in the right subtree
+      if (current -> right != NULL)//doesn't equal NULL
       return find_helper(current ->right, key);//move to the right Node if it isn't NULL
-    else 
-      return -1;//the Node wasn't in the tree
+      else if (current->right == NULL){//does equal NULL
+	current->right = new Node(key, 0);//Node wasn't found so insert with 0 as the data
+	return current->right->data;//return the data which is 0
+      }
+    
+    }
   }
-  return current -> data;//this returns the data associated with
-                         //the key that was passed in if it was found
-}
+  return current->data;//this returns the data associated with
+                                        //the key that was passed in if it was found
+    }
+
+
 void binary_search_tree::print(){
   if(root != NULL)//nonempty tree
     print_helper(root);
@@ -130,13 +143,13 @@ void binary_search_tree::read_from_file(string file){
 }
 void binary_search_tree::read_find(Node *current, string key){
   if (current->key < key && current->right != NULL){//if the key goes before
-                                                    //current's key and the key
-                                                    //of the left Node isn't NULL
+                                                                                            //current's key and the key
+                                                                                            //of the left Node isn't NULL
     read_find(current->right, key);//recurse right
   }
   else if(current->key > key && current->left != NULL){//if the key goes after
-                                                    //current's key and the key
-                                                    //of the right Node isn't NULL
+                                                                                                 //current's key and the key
+                                                                                                 //of the right Node isn't NULL
     read_find(current->left, key);//recurse left
   }
   else
@@ -149,7 +162,7 @@ void binary_search_tree::read_helper(Node *current, string key){
     if(current->left != NULL)//bounds checking
       read_helper(current->left, key);//recurse left
     else 
-      current->left = new Node(key, 1);	//set the Node to the left of current
+      current->left = new Node(key, 1);//set the Node to the left of current
   } 
   else if(current->key < key){//if the key goes in the right subtree
     if (current->right != NULL)////bounds checking
@@ -160,44 +173,45 @@ void binary_search_tree::read_helper(Node *current, string key){
 }
 void binary_search_tree::remove_bad_char(string &key){
   unsigned const MAX_POSITION = 100;//This is an arbitrary number chosen because the
-                              //find function that is included in
-                              //the string library returns an
-                              //extremely large integer if
-                              //the character isn't found and this will
-                              //function as the stopping point for the
-                              //while loops.
+                                                                         //find function that is included in
+                                                                         //the string library returns an
+                                                                         //extremely large integer if
+                                                                         //the character isn't found and this will
+                                                                         //function as the stopping point for the
+                                                                         //while loops.
   const int One_char = 1;//The function erase removes a specific number of characters
-                   //starting at at a given position and since find returns the
-                   //position of the passed-in character, erase will remove the
-                   //character at the position that find returns and only erases
-                   //1 character (One_char) which is what the second parameter
-                   //indicates.
+                                            //starting at at a given position and since find returns the
+                                            //position of the passed-in character, erase will remove the
+                                            //character at the position that find returns and only erases
+                                            //1 character (One_char) which is what the second parameter
+                                            //indicates.
   while(key.find(".") < MAX_POSITION)
-    key.erase(key.find("."), One_char);
+    key.erase(key.find("."), One_char);//erase "."
   while(key.find(";") < MAX_POSITION)
-    key.erase(key.find(";"), One_char);
-  while(key.find("\"") < MAX_POSITION)
-    key.erase(key.find("\""), One_char);
+    key.erase(key.find(";"), One_char);//erase ";"
+  while(key.find("\"") < MAX_POSITION) 
+    key.erase(key.find("\""), One_char);//erase "\"
   while(key.find(",") < MAX_POSITION)
-    key.erase(key.find(","), One_char);
-  while(key.find("'") < MAX_POSITION)
-    key.erase(key.find("'"), One_char);
+    key.erase(key.find(","), One_char);//erase ","
   while(key.find("?") < MAX_POSITION)
-    key.erase(key.find("?"), One_char);
+    key.erase(key.find("?"), One_char);//erase "?"
   while(key.find(":") < MAX_POSITION)
-    key.erase(key.find(":"), One_char);
+    key.erase(key.find(":"), One_char);//erase ":"
   while(key.find("!") < MAX_POSITION)
-    key.erase(key.find("!"), One_char);
+    key.erase(key.find("!"), One_char);//erase "!"
   while(key.find("/") < MAX_POSITION)
-    key.erase(key.find("/"), One_char);
-  while(key.find("-") < MAX_POSITION)
-    key.erase(key.find("-"), One_char);
+    key.erase(key.find("/"), One_char);//erase "/"
   while(key.find("*") < MAX_POSITION)
-    key.erase(key.find("*"), One_char);
+    key.erase(key.find("*"), One_char);//erase "*"
   while(key.find("(") < MAX_POSITION)
-    key.erase(key.find("("), One_char);
+    key.erase(key.find("("), One_char);//erase "("
   while(key.find(")") < MAX_POSITION)
-    key.erase(key.find(")"), One_char); 
+    key.erase(key.find(")"), One_char);//erase ")"
+  while(key.find("&") < MAX_POSITION)
+    key.erase(key.find("&"), One_char); //erase "&"
+  while(key.find("'") < MAX_POSITION)
+    key.erase(key.find("'"), One_char); //erase "'"
+  
 }
 void binary_search_tree::remove(string key){
   if (root == NULL)//empty tree
@@ -263,7 +277,6 @@ void binary_search_tree::save_helper(Node *current, ofstream &oFile){
                                                            //Node
     save_helper(current->right, oFile);//write the right subtree
   }
-  
 }
 
 int& binary_search_tree::operator[](string key){

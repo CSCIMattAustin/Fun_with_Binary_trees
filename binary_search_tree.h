@@ -40,7 +40,7 @@ class binary_search_tree {
   void print_helper(Node *current);//recursively prints the tree
   void remove_helper(Node *&current, string key);//helps remove by finding the Node to remove based on the key
   void save_helper(Node *current, ofstream &oFile);//Helpf the save function write to the given file
- int& operator_helper(Node *&current, string key);
+  int& operator_helper(Node *&current, string key);//operator overload helper function
  public:
   binary_search_tree();//sets the root to NULL
   ~binary_search_tree();//destructs the tree when the program ends
