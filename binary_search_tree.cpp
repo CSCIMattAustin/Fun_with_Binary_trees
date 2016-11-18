@@ -70,7 +70,7 @@ int binary_search_tree::find_helper(Node *current, string key){
     }
     else if (current->key < key){//needs to be in the right subtree
       if (current -> right != NULL)//doesn't equal NULL
-      return find_helper(current ->right, key);//move to the right Node if it isn't NULL
+	return find_helper(current ->right, key);//move to the right Node if it isn't NULL
       else if (current->right == NULL){//does equal NULL
 	current->right = new Node(key, 0);//Node wasn't found so insert with 0 as the data
 	return current->right->data;//return the data which is 0
@@ -79,8 +79,8 @@ int binary_search_tree::find_helper(Node *current, string key){
     }
   }
   return current->data;//this returns the data associated with
-                                        //the key that was passed in if it was found
-    }
+  //the key that was passed in if it was found
+}
 
 
 void binary_search_tree::print(){
@@ -143,13 +143,13 @@ void binary_search_tree::read_from_file(string file){
 }
 void binary_search_tree::read_find(Node *current, string key){
   if (current->key < key && current->right != NULL){//if the key goes before
-                                                                                            //current's key and the key
-                                                                                            //of the left Node isn't NULL
+    //current's key and the key
+    //of the left Node isn't NULL
     read_find(current->right, key);//recurse right
   }
   else if(current->key > key && current->left != NULL){//if the key goes after
-                                                                                                 //current's key and the key
-                                                                                                 //of the right Node isn't NULL
+    //current's key and the key
+    //of the right Node isn't NULL
     read_find(current->left, key);//recurse left
   }
   else
@@ -172,46 +172,18 @@ void binary_search_tree::read_helper(Node *current, string key){
   }
 }
 void binary_search_tree::remove_bad_char(string &key){
-  unsigned const MAX_POSITION = 100;//This is an arbitrary number chosen because the
-                                                                         //find function that is included in
-                                                                         //the string library returns an
-                                                                         //extremely large integer if
-                                                                         //the character isn't found and this will
-                                                                         //function as the stopping point for the
-                                                                         //while loops.
-  const int One_char = 1;//The function erase removes a specific number of characters
-                                            //starting at at a given position and since find returns the
-                                            //position of the passed-in character, erase will remove the
-                                            //character at the position that find returns and only erases
-                                            //1 character (One_char) which is what the second parameter
-                                            //indicates.
-  while(key.find(".") < MAX_POSITION)
-    key.erase(key.find("."), One_char);//erase "."
-  while(key.find(";") < MAX_POSITION)
-    key.erase(key.find(";"), One_char);//erase ";"
-  while(key.find("\"") < MAX_POSITION) 
-    key.erase(key.find("\""), One_char);//erase "\"
-  while(key.find(",") < MAX_POSITION)
-    key.erase(key.find(","), One_char);//erase ","
-  while(key.find("?") < MAX_POSITION)
-    key.erase(key.find("?"), One_char);//erase "?"
-  while(key.find(":") < MAX_POSITION)
-    key.erase(key.find(":"), One_char);//erase ":"
-  while(key.find("!") < MAX_POSITION)
-    key.erase(key.find("!"), One_char);//erase "!"
-  while(key.find("/") < MAX_POSITION)
-    key.erase(key.find("/"), One_char);//erase "/"
-  while(key.find("*") < MAX_POSITION)
-    key.erase(key.find("*"), One_char);//erase "*"
-  while(key.find("(") < MAX_POSITION)
-    key.erase(key.find("("), One_char);//erase "("
-  while(key.find(")") < MAX_POSITION)
-    key.erase(key.find(")"), One_char);//erase ")"
-  while(key.find("&") < MAX_POSITION)
-    key.erase(key.find("&"), One_char); //erase "&"
-  while(key.find("'") < MAX_POSITION)
-    key.erase(key.find("'"), One_char); //erase "'"
-  
+  string f = "";//temporary string to store the new word without characters
+  unsigned i = 0;//i will always be 0 or greater because it is an index
+  while (i < key.length () ){//stop at the last index
+    char c = toupper(key[i]);//Makes it uppercase to count any possible
+                                                //capitalizations of the key 
+    if ((c >= 'A' && c <= 'Z')||(c >= '0' &&c <= '9')){
+    //only adds letters and numbers into the string
+      f+=c;
+      i++;
+    }
+  }
+  key = f;
 }
 void binary_search_tree::remove(string key){
   if (root == NULL)//empty tree
@@ -230,7 +202,7 @@ void binary_search_tree::remove_helper(Node *&current, string key){
       current = NULL;//reassign to NULL
     }
     else if (current->left == NULL && current->key == key){//Case 2:No right subtree
-     Node *temp;//temporary pointer for to conserve the right subtree
+      Node *temp;//temporary pointer for to conserve the right subtree
       temp = current->right;
       delete current;//delete the intended Node to delete
       current = temp;//reattach the right subtree
@@ -246,7 +218,7 @@ void binary_search_tree::remove_helper(Node *&current, string key){
       while(traverse->right != NULL)//stopping point for traversing
 	traverse = traverse->right;//traverse to the rightmost in the left subtree
       current->key = traverse->key;
-      current->data = traverse->data;//change current's values to the
+      current->data = traverse->data;//change current's values to 
                                      //that of the left subtree's rightmost values
       if (traverse ->left != NULL){//if the biggest value on the left has a
 	                           //left subtree

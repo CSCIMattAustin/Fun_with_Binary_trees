@@ -27,7 +27,7 @@ class Node{//Node class
 };
 
 class binary_search_tree {
- private:
+ private://These don't need to be accessed directly in main
   Node *root;//pointer to the root of the tree
   void destructor_helper(Node *current);//helps the destructor and erase_tree to allow reucursion
   void set_helper(Node *current, string key);//helps the set function to allow recursion
@@ -55,6 +55,4 @@ class binary_search_tree {
   void erase_tree();//erases the entire tree
   int& operator[](string key);//overloads the []operator to return the data
 };
-
-
 #endif //BINARY_SEARCH_TREE_H
